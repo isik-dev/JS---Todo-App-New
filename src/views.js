@@ -4,12 +4,12 @@ import { getFilters } from "./filters";
 // Render application todos based on filters
 const renderTodos = () => {
   const todosEl = document.querySelector("#todos");
-  const filters = getFilters();
-  const filteredTodos = getTodos().filter(function(todo) {
+  const { searchText, hideCompleted } = getFilters();
+  const filteredTodos = getTodos().filter(function (todo) {
     const searchFilter = todo.text
       .toLowerCase()
-      .includes(filters.searchText.toLowerCase());
-    const checkboxFilter = !todo.completed || !filters.hideCompleted;
+      .includes(searchText.toLowerCase());
+    const checkboxFilter = !todo.completed || !hideCompleted;
 
     return searchFilter && checkboxFilter;
   });
@@ -20,7 +20,7 @@ const renderTodos = () => {
   todosEl.appendChild(generateSummaryDOM(incompleteTodos));
 
   if (filteredTodos.length > 0) {
-    filteredTodos.forEach(function(todo) {
+    filteredTodos.forEach(function (todo) {
       todosEl.appendChild(generateTodoDOM(todo));
     });
   } else {
